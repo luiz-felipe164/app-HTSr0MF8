@@ -32,4 +32,24 @@ class ProductController extends Controller
                 'code' => $e->getCode()], 500);
         }
     }
+
+    public function update(ProductRequest $request)
+    {
+        try {
+            $result = $this->productService->update($request->validated());
+
+            if ($result['status']) {
+                return response()->json(['quantity' => $result['quantity']], 200);
+            }
+
+            return response()->json($result, $result['code']);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred, please contact our support', 
+                'code' => $e->getCode()], 500);
+        }
+
+
+    }
 }

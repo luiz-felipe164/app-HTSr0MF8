@@ -25,6 +25,14 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->method() === 'PUT') {
+            return [
+                'SKU' => 'required',
+                'quantity' => 'required|integer',
+                'action'   => 'required|in:remove,add'
+            ];
+        }
+
         return [
             'name' => 'required|string|max:255',
             'SKU' => 'required|unique:products',
