@@ -26,18 +26,18 @@ class ProductService
             return ['status' => false, 'message' => 'Product not found', 'code' => 404];
         }
 
-        $newQuantity = $data['action'] === 'add' ? 
-                    $product->quantity + $data['quantity'] : 
-                    $product->quantity - $data['quantity'];
+        $newQuantity = $data['action'] === 'add' ?
+            $product->quantity + $data['quantity'] :
+            $product->quantity - $data['quantity'];
 
         if ($newQuantity < 0) {
-            return ['status' => false, 'message' => 'the product cannot have a quantity less than zero', 'code' => 500];
+            return ['status' => false, 'message' => 'The product cannot have a quantity less than zero', 'code' => 500];
         }
 
         $product->quantity = $newQuantity;
         $product->save();
 
-        $this->historyService->store($data['action'], $data['quantity'], $product->sku);
+        $this->historyService->store($data['action'], $data['quantity'], $product->SKU);
 
         return ['status' => true, 'quantity' => $newQuantity];
     }

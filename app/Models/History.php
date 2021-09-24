@@ -9,6 +9,8 @@ class History extends Model
 {
     use HasFactory;
 
+    protected $table = "history";
+
     protected $fillable = [
         'SKU',
         'quantity',

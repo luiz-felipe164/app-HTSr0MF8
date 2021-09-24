@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Services\ProductService;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
@@ -15,7 +16,7 @@ class ProductController extends Controller
         $this->productService = $service;
     }
 
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request): JsonResponse
     {
         try {
             $product = $this->productService->store($request->validated());
@@ -25,15 +26,15 @@ class ProductController extends Controller
             }
 
             throw new Exception("Error trying to save to database");
-            
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'An error occurred, please contact our support', 
-                'code' => $e->getCode()], 500);
+                'message' => 'An error occurred, please contact our support',
+                'code' => $e->getCode()
+            ], 500);
         }
     }
 
-    public function update(ProductRequest $request)
+    public function update(ProductRequest $request): JsonResponse
     {
         try {
             $result = $this->productService->update($request->validated());
@@ -43,13 +44,11 @@ class ProductController extends Controller
             }
 
             return response()->json($result, $result['code']);
-
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'An error occurred, please contact our support', 
-                'code' => $e->getCode()], 500);
+                'message' => 'An error occurred, please contact our support',
+                'code' => $e->getCode()
+            ], 500);
         }
-
-
     }
 }
