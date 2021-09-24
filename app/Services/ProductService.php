@@ -6,6 +6,13 @@ use App\Models\Product;
 
 class ProductService
 {
+    private $historyService;
+
+    public function __construct(HistoryProductService $historyService)
+    {
+        $this->historyService = $historyService;
+    }
+
     public function store(array $data): Product
     {
         return Product::create($data);
@@ -29,6 +36,8 @@ class ProductService
 
         $product->quantity = $newQuantity;
         $product->save();
+
+        $this->historyService->store($data['action'], $data['quantity'], $product->sku);
 
         return ['status' => true, 'quantity' => $newQuantity];
     }
