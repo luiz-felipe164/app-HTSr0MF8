@@ -26,7 +26,7 @@ cp .env.example .env
 composer install
 ```
 ```sh
-php artisan key:generate && php artisan migrate && php artisan optimize
+php artisan key:generate && php artisan migrate
 ```
 ```sh
 php artisan optimize
